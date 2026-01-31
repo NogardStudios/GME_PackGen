@@ -271,8 +271,8 @@ public class PackGenerator {
             if (geo != null) {
                 entry.getValue().addHeadBind(geo);
             }
-            Path path = animationsFolder.toPath().resolve(entry.getValue().getPath() + entry.getKey() + ".animation.json");
-            Path pathController = animationControllersFolder.toPath().resolve(entry.getValue().getPath() + entry.getKey() + ".animation_controllers.json");
+            Path path = animationsFolder.toPath().resolve(entry.getValue().getPath() + entry.getKey() + ".json");
+            Path pathController = animationControllersFolder.toPath().resolve(entry.getValue().getPath() + entry.getKey() + ".json");
 
             pathController.toFile().getParentFile().mkdirs();
             path.toFile().getParentFile().mkdirs();
@@ -294,7 +294,7 @@ public class PackGenerator {
 
         for (Map.Entry<String, Geometry> entry : geometryMap.entrySet()) {
             entry.getValue().modify();
-            Path path = modelsFolder.toPath().resolve(entry.getValue().getPath() + entry.getKey() + ".geo.json");
+            Path path = modelsFolder.toPath().resolve(entry.getValue().getPath() + entry.getKey() + ".json");
             path.toFile().getParentFile().mkdirs();
             String id = entry.getValue().getGeometryId();
 
@@ -309,7 +309,7 @@ public class PackGenerator {
                         String suffix = size[0] + "_" + size[1];
                         entry.getValue().setTextureWidth(size[0]);
                         entry.getValue().setTextureHeight(size[1]);
-                        path = modelsFolder.toPath().resolve(entry.getValue().getPath() + entry.getKey() + "_" + suffix + ".geo.json");
+                        path = modelsFolder.toPath().resolve(entry.getValue().getPath() + entry.getKey() + "_" + suffix + ".json");
 
                         entry.getValue().setId(id + "_" + suffix);
 
@@ -361,7 +361,7 @@ public class PackGenerator {
             Entity entity = entry.getValue();
             entity.modify();
 
-            Path entityPath = entityFolder.toPath().resolve(entity.getPath() + entry.getKey() + ".entity.json");
+            Path entityPath = entityFolder.toPath().resolve(entity.getPath() + entry.getKey() + ".json");
             entityPath.toFile().getParentFile().mkdirs();
             if (entityPath.toFile().exists()) {
                 continue;
@@ -378,7 +378,7 @@ public class PackGenerator {
             if (!geometryMap.containsKey(id)) continue;
             RenderController controller = new RenderController(id, geometryMap.get(id).getBones(), entity);
             entity.setRenderController(controller);
-            Path renderPath = new File(renderControllersFolder, "controller.render." + id + ".json").toPath();
+            Path renderPath = new File(renderControllersFolder, id + ".json").toPath();
             if (renderPath.toFile().exists()) {
                 continue;
             }
