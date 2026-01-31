@@ -72,7 +72,9 @@ public class RenderController {
                 controller.add("uv_anim", uvAnim);
                 JsonArray offset = new JsonArray();
                 offset.add(0.0);
-                offset.add("math.mod(math.floor(q.life_time * " + anim.fps + ")," + anim.frames + ") / " + anim.frames);
+                // Cap fps at reasonable value (7.0 is standard for Bedrock animations)
+                double animFps = anim.fps > 60 ? 7.0 : anim.fps;
+                offset.add("math.mod(math.floor(q.life_time * " + animFps + ")," + anim.frames + ") / " + anim.frames);
                 uvAnim.add("offset", offset);
                 JsonArray scale = new JsonArray();
                 scale.add(1.0);
