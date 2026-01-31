@@ -49,14 +49,15 @@ public class RenderController {
 
             JsonObject controller = new JsonObject();
 
-            renderControllers.add("controller.render." + modelId + "_" + key, controller);
+            String controllerName = key.equals(modelId) ? "controller.render.meg_" + modelId : "controller.render.meg_" + modelId + "_" + key;
+            renderControllers.add(controllerName, controller);
 
             if (!entity.getModelConfig().getPerTextureUvSize().isEmpty()) {
                 Integer[] size = entity.getModelConfig().getPerTextureUvSize().getOrDefault(key, new Integer[]{16, 16});
-                String suffix = "t_" + size[0] + "_" + size[1];
-                controller.addProperty("geometry", "Geometry." + suffix);
+                String suffix = size[0] + "_" + size[1];
+                controller.addProperty("geometry", "Geometry." + modelId + "_" + suffix);
             } else {
-                controller.addProperty("geometry", "Geometry.default");
+                controller.addProperty("geometry", "Geometry." + modelId);
             }
             JsonArray materials = new JsonArray();
             String material = entity.getModelConfig().getTextureMaterials().get(key);
